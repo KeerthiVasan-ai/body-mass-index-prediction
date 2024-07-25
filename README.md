@@ -1,1 +1,1 @@
-# FACE-BMI
+# body-mass-index-prediction
