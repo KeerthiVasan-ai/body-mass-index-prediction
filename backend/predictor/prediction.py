@@ -10,4 +10,4 @@ def predict_height_width_BMI(features,height_model,weight_model,bmi_model)->dict
     height = np.asscalar(np.exp(height_model.predict(process_feature)))
     weight = np.asscalar(np.exp(weight_model.predict(process_feature)))
     bmi = np.asscalar(np.exp(bmi_model.predict(process_feature)))
-    return {'height':height,'weight':weight,'bmi':bmi}
+    return {'height':f"{height:.2f}",'weight':f"{weight:.2f}",'bmi':f"{bmi:.2f}"}
