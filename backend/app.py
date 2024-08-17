@@ -14,8 +14,12 @@ height_model = joblib.load(height_model_path)
 weight_model = joblib.load(weight_model_path)
 bmi_model = joblib.load(bmi_model_path)
 
-app = Flask(__name__)
-CORS(app)
+app = Flask(__name__, static_folder='build', static_url_path='/')
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+@app.route('/')
+def serve_index():
+    return app.send_static_file('index.html')
       
 @app.route("/predict",methods=['POST'])
 def post_image():
