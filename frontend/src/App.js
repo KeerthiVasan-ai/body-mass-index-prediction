@@ -3,18 +3,8 @@
   import Swal from "sweetalert2"
 
   function App() {
-    const [val, setVal] = useState("Upload image to predict");
     const [filename, setFilename] = useState("No file uploaded");
     const [file, setFile] = useState(null);
-
-    const htmlContent = `
-      <div>
-        <h2>Your BMI Details</h2>
-        <p><strong>Height:</strong> ${val.height.toFixed(2)} cm</p>
-        <p><strong>Weight:</strong> ${val.weight.toFixed(2)} kg</p>
-        <p><strong>BMI:</strong> ${val.bmi.toFixed(2)}</p>
-      </div>
-    `;
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -28,13 +18,21 @@
             title: "File Not Found",
             text: "Upload the Image to get started",
       });
-        return
+        return;
       }
       Swal.showLoading();
       try {
-        axios.post("http://localhost:5000/predict", formData).then((res) => {
-          console.log(res.data);
-          setVal(res.data);
+        axios.post("/predict", formData).then((res) => {
+
+          let htmlContent = `
+            <div>
+              <h2>Your BMI Details</h2>
+              <p><strong>Height:</strong> ${res.data.height} m</p>
+              <p><strong>Weight:</strong> ${res.data.weight} kg</p>
+              <p><strong>BMI:</strong> ${res.data.bmi}</p>
+            </div>
+          `;
+
           Swal.hideLoading();
           Swal.fire({
             title: 'BMI Predictor',
